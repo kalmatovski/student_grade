@@ -1,11 +1,13 @@
 "use client"
+import axios from 'axios';
 import Link from 'next/link';
-import React from 'react'
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+    
+  
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -17,7 +19,15 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    axios.post("https://kalmatovski.pythonanywhere.com/send",{
+        name:username,
+        pass:password
+    }).then(res=>{
+        console.log(res);
+    })
   };
+
+  const isInputsEmpty = !username || !password;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
@@ -52,21 +62,24 @@ const LoginPage = () => {
           />
         </div>
         <div className="flex items-center justify-between">
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
-          >
-            Sign In
-          </button>
-          <Link href="/admin"> 
-          <button
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="button"
-          >
-            Admin panel
-          </button>
+          {/* <Link href={`/student/${username}`}> */}
+            <button
+              disabled={isInputsEmpty}
+              className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${isInputsEmpty && 'opacity-50 cursor-not-allowed'}`}
+              type="submit"
+            >
+              Sign In
+            </button>
+          {/* </Link> */}
+
+          <Link href="/login/admin">
+            <button
+              className={`bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline 'opacity-50 cursor-not-allowed'}`}
+              type="button"
+            >
+              Admin panel
+            </button>
           </Link>
-         
         </div>
       </form>
     </div>
