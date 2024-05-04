@@ -1,4 +1,5 @@
 "use client"
+import { addNewStudent } from '@/services/service';
 import axios from 'axios';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
@@ -19,12 +20,13 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("https://kalmatovski.pythonanywhere.com/send",{
-        name:username,
-        pass:password
-    }).then(res=>{
-        console.log(res);
-    })
+    addNewStudent({name:username, pass:password})
+    // axios.post("https://kalmatovski.pythonanywhere.com/send",{
+    //     name:username,
+    //     pass:password
+    // }).then(res=>{
+    //     console.log(res.data);
+    // })
   };
 
   const isInputsEmpty = !username || !password;
