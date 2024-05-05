@@ -1,14 +1,15 @@
 "use client"
-import { addNewStudent } from '@/services/service';
+import { useRouter } from 'next/navigation'
 import axios from 'axios';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import { getStudentDataById } from '@/services/service';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
     
-  
+  const router = useRouter()
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -18,15 +19,10 @@ const LoginPage = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    addNewStudent({name:username, pass:password})
-    // axios.post("https://kalmatovski.pythonanywhere.com/send",{
-    //     name:username,
-    //     pass:password
-    // }).then(res=>{
-    //     console.log(res.data);
-    // })
+    const res = await getStudentDataById({username, password})
+    console.log(res);
   };
 
   const isInputsEmpty = !username || !password;
@@ -64,7 +60,6 @@ const LoginPage = () => {
           />
         </div>
         <div className="flex items-center justify-between">
-          {/* <Link href={`/student/${username}`}> */}
             <button
               disabled={isInputsEmpty}
               className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${isInputsEmpty && 'opacity-50 cursor-not-allowed'}`}
@@ -72,7 +67,6 @@ const LoginPage = () => {
             >
               Sign In
             </button>
-          {/* </Link> */}
 
           <Link href="/login/admin">
             <button
