@@ -2,7 +2,6 @@
 import { getStudentDataById } from '@/services/service';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-
 const StudentData = () => {
     const [students, setStudents] = useState([])
     const { id } = useParams();

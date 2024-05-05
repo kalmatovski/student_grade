@@ -34,9 +34,9 @@ export default function AdminPanel() {
   };
 
   return (
-
-    <div className="overflow-x-auto">
-      {loading?(<p>Loading...</p>):
+<div className="w-full flex justify-center">
+{loading?(<p className="text-4xl m-auto">Loading...</p>
+  ):<div className="overflow-x-auto">
          <Table className="min-w-full divide-y divide-gray-200">
          <TableCaption>A list of Students</TableCaption>
          <TableHeader>
@@ -48,7 +48,7 @@ export default function AdminPanel() {
            </TableRow>
          </TableHeader>
          <TableBody>
-           {students.map((s) => (
+           {students?.map((s) => (
              <TableRow key={s.username}>
                <TableCell className="font-medium text-sm md:text-base lg:text-lg" onClick={()=>{
                  console.log(s.username);
@@ -61,8 +61,11 @@ export default function AdminPanel() {
            ))}
          </TableBody>
        </Table>
-      }
+      
    
-    </div>
+    </div>}
+
+</div>
+    
   )
 }
