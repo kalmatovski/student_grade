@@ -16,6 +16,8 @@ const LoginPage = () => {
   useEffect(()=>{
     const u_name = localStorage.getItem("USERNAME")
     const u_pass = localStorage.getItem("PASSWORD")
+    const admin_key = localStorage.getItem("ADMINKEY")
+
     if(u_name && u_pass){
       setIsLogged(true)
       setName(u_name)
@@ -39,6 +41,7 @@ const LoginPage = () => {
     const res = await getStudentDataById(username)
     localStorage.setItem("USERNAME", username)
     localStorage.setItem("PASSWORD", password)
+
     router.push(`student/${username}`)
   };
 
@@ -46,7 +49,7 @@ const LoginPage = () => {
 
   return (
     <>
-    {isLogged?(<Redirect rout = {rout}/>):
+    {isLogged?(<Redirect rout = {rout}  />):
            <div className="flex flex-col items-center justify-center min-h-screen">
            <h1 className="text-3xl font-bold mb-4">Login Page</h1>
            <form className="w-full max-w-md" onSubmit={handleSubmit}>

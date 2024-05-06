@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect } from 'react'
 
-const Redirect = ({path, rout}) => {
+const Redirect = ({rout}) => {
     useEffect(() =>{
         rout()
     })

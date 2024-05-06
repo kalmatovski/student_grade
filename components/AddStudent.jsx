@@ -8,15 +8,16 @@ const AddStudent = () => {
   const { register, handleSubmit, formState: { errors },reset } = useForm();
   const [students, setStudents] = useState([])
 
-  const onSubmit = (data) => {  
-   console.log(data);
-    addNewStudent(data)
-    reset()
+  const onSubmit = async (data) => {
+    console.log(data);
+    await addNewStudent(data);
+    reset();
+    window.location.reload(); 
   };
 
   return (
    <>
-       <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col w-1/2 m-auto bg-white shadow-md rounded-md p-6'>
+       <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col w-1/2 m-auto bg-white  rounded-md p-6'>
       <h2 className="text-2xl font-bold mb-4 text-center">Student Registration</h2>
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">Name</label>

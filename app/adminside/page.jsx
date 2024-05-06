@@ -1,12 +1,16 @@
 "use client"
 import { Button } from "@/components/ui/button"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { deleteStudent, getStudents } from "@/services/service"
+import { add_grades, deleteStudent, getStudents } from "@/services/service"
 import { useEffect, useState } from "react"
+import AddStudent from "../../components/AddStudent"
 
 export default function AdminPanel() {
   const [students, setStudents] = useState([])
   const [loading, setLoading] = useState(true)
+  const [className, setClassName] = useState('')
+  const [mark, setMark] = useState('')
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,12 +37,31 @@ export default function AdminPanel() {
     }
   };
 
+  const grade_add = async (data) => {
+   add_grades(data)
+  }
+
+
+  const handleClassChange = (event) => {
+    setClassName(event.target.value);
+};
+  const handleGrades = (event) => {
+    setMark(event.target.value);
+};
+
   return (
 <div className="w-full flex justify-center">
 {loading?(<p className="text-4xl m-auto">Loading...</p>
   ):<div className="overflow-x-auto">
          <Table className="min-w-full divide-y divide-gray-200">
-         <TableCaption>A list of Students</TableCaption>
+         <TableCaption>
+          <Dialog>
+              <DialogTrigger><Button>Add new student</Button></DialogTrigger>
+                <DialogContent>
+                   <AddStudent/>
+                </DialogContent>
+          </Dialog>
+</TableCaption>
          <TableHeader>
            <TableRow>
              <TableHead className="text-sm md:text-base lg:text-lg">Name</TableHead>
@@ -56,14 +79,36 @@ export default function AdminPanel() {
                <TableCell className="text-sm md:text-base lg:text-lg">{s.lastname}</TableCell>
                <TableCell className="text-sm md:text-base lg:text-lg">{s.email}</TableCell>
                <TableCell className="text-right text-sm md:text-base lg:text-lg">{s.phone}</TableCell>
-               <TableCell className="text-right text-sm md:text-base lg:text-lg"><Button onClick={()=>deleteSt(s.username)}>DELETE</Button></TableCell>
+               <TableCell className="text-right text-sm md:text-base lg:text-lg">       <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline">Add grades</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Add Grades to{" "+s.name}</DialogTitle>
+ 
+        </DialogHeader>
+        <div className="flex flex-col space-y-4 m-11 items-center">
+    <label htmlFor="class" className="text-gray-700">Enter classname</label>
+    <input value={className} onChange={handleClassChange} type="text" id="class" className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500" />
+
+    <label htmlFor="grade" className="text-gray-700">Enter Grade</label>
+    <input value={mark} onChange={handleGrades} type="number" id="grade" className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500" />
+    <Button className="w-1/3" type="submit" onClick={()=>{grade_add({username:s.username, grade:mark, classname:className})}}>Save</Button>
+</div>
+
+      </DialogContent>
+    </Dialog> 
+               </TableCell>
+               <TableCell className="text-right text-sm md:text-base lg:text-lg"><Button variant="destructive" onClick={()=>deleteSt(s.username)}>DELETE</Button></TableCell>
              </TableRow>
            ))}
          </TableBody>
        </Table>
-      
-   
-    </div>}
+
+
+    </div>
+    }
 
 </div>
     
