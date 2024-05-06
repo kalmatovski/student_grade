@@ -11,6 +11,7 @@ export default function AdminPanel() {
   const [loading, setLoading] = useState(true)
   const [className, setClassName] = useState('')
   const [mark, setMark] = useState('')
+  const [success, setSuccess] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,6 +40,8 @@ export default function AdminPanel() {
 
   const grade_add = async (data) => {
    await add_grades(data)
+   setSuccess(true)
+   window.location.reload()
   }
 
   const handleClassChange = (event) => {
@@ -94,6 +97,8 @@ export default function AdminPanel() {
     <label htmlFor="grade" className="text-gray-700">Enter Grade</label>
     <input value={mark} onChange={handleGrades} type="number" id="grade" className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500" />
     <Button className="w-1/3" type="submit" onClick={()=>{grade_add({username:s.username, grade:mark, classname:className})}}>Save</Button>
+    {success?(<TableCell className="text-right text-sm md:text-base lg:text-lg"><p>Class added to {s.name}</p></TableCell>):null} 
+
 </div>
 
       </DialogContent>
