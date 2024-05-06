@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { add_grades, deleteStudent, getStudents } from "@/services/service"
+import { add_grades, deleteStudent, getGradesById, getStudents } from "@/services/service"
 import { useEffect, useState } from "react"
 import AddStudent from "../../components/AddStudent"
 
@@ -11,6 +11,7 @@ export default function AdminPanel() {
   const [loading, setLoading] = useState(true)
   const [className, setClassName] = useState('')
   const [mark, setMark] = useState('')
+  const [gradedSt, setGradedSt] = useState([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,9 +39,8 @@ export default function AdminPanel() {
   };
 
   const grade_add = async (data) => {
-   add_grades(data)
+   await add_grades(data)
   }
-
 
   const handleClassChange = (event) => {
     setClassName(event.target.value);
@@ -105,8 +105,6 @@ export default function AdminPanel() {
            ))}
          </TableBody>
        </Table>
-
-
     </div>
     }
 

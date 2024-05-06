@@ -15,7 +15,6 @@ const StudentData = () => {
                 const gradesData = await getGradesById(id);
                 setStudents(studentData);
                 if (gradesData){
-
                     setGrades(gradesData.grades);
                     setIsFetch(true)
                 }
