@@ -11,7 +11,6 @@ export default function AdminPanel() {
   const [loading, setLoading] = useState(true)
   const [className, setClassName] = useState('')
   const [mark, setMark] = useState('')
-  const [gradedSt, setGradedSt] = useState([])
 
   useEffect(() => {
     const fetchData = async () => {
